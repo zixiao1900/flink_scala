@@ -9,7 +9,7 @@ cmd: 输入一行一行的数据
 val inputDataStream: DataStream[String] = env.socketTextStream("localhost", 9999)
 控制台没来一条数据 就打印一个结果
 
-kafka相关操作
+kafka相关操作 windows kafka闪退就清理日志
 
 -- 启动zookeeper 不要关
 cmd1: bin/windows/zookeeper-server-start.bat ./config/zookeeper.properties
@@ -28,7 +28,7 @@ return:
     test001
 
 -- 生产者 发送消息
-cmd3: bin/windows/kafka-console-producer.bat --broker-list localhost:9092 --topic topic_flink_sensor2
+cmd3: bin/windows/kafka-console-producer.bat --broker-list localhost:9092 --topic topic_flink_sensor
 然后在cmd3中可以写消息发送
 
 -- 接受消息

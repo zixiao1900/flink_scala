@@ -14,7 +14,7 @@ object Flink005_kafka_MockData {
         val kafkaGenerator = new MykafkaGenerateDataFromFile(
             "localhost:9092",
             "datas/sensor1.txt",
-            "topic_flink_sensor2"
+            "topic_flink_sensor"
         )
         kafkaGenerator.run()
     }
@@ -57,7 +57,7 @@ class MykafkaGenerateDataFromFile(host: String, dataPath:String, produceTopic:St
                     val record = new ProducerRecord[String, String](produceTopic, data)
                     // 生产者发送数据
                     producer.send(record)
-//                    println(data)
+                    println(data)
                 }
             )
             // 每两秒发一次  一次随机生成1-2条数据(String)
