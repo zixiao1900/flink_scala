@@ -11,6 +11,8 @@ object FlinkSql001_example {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     env.setParallelism(1)
 
+    // todo DataStrem -> table, table -> view, DataStream -> view
+
 
     // 文件模拟数据流  一次性读取 有界流 可以写入
 //    val inputStream: DataStream[String] = env.readTextFile("datas/sensor2.txt") // todo batch一次性读取
@@ -41,7 +43,7 @@ object FlinkSql001_example {
      |-- id: STRING
      |-- temperature: DOUBLE
      */
-    resultTable.toAppendStream[(String, Double)].print("result")
+//    resultTable.toAppendStream[(String, Double)].print("result")
     /*
     result> (sensor_1,35.8)
     result> (sensor_1,31.8)
@@ -55,7 +57,7 @@ object FlinkSql001_example {
 
 
 
-    // todo 2 sql实现
+    // todo 2 sql实现 TABLE -> VIEW
     // 注册表
     val tableName: String = "dataTableSql"
     tableEnv.createTemporaryView(tableName, dataTable)
@@ -85,6 +87,29 @@ object FlinkSql001_example {
     resultSql> (sensor_1,5.8)
      */
 
+    // todo 2 DataStream -> view
+    tableEnv.createTemporaryView("dataTableSql2", dataStream)
+    val sqlText1 =
+      s"""
+         |select
+         |    id,
+         |    temperature
+         |from ${tableName}
+         |where id = 'sensor_1'
+         |""".stripMargin
+    val resultSqlTable1 = tableEnv.sqlQuery(sqlText1)
+      resultSqlTable1.toAppendStream[(String, Double)].print("resultSql1")
+    /*
+    resultSql1> (sensor_1,35.8)
+    resultSql1> (sensor_1,34.8)
+    resultSql1> (sensor_1,31.8)
+    resultSql1> (sensor_1,14.8)
+    resultSql1> (sensor_1,15.8)
+    resultSql1> (sensor_1,37.1)
+    resultSql1> (sensor_1,7.1)
+    resultSql1> (sensor_1,5.1)
+    resultSql1> (sensor_1,11.8)
+     */
 
 
     env.execute()

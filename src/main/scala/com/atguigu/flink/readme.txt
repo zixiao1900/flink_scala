@@ -32,7 +32,7 @@ cmd3: bin/windows/kafka-console-producer.bat --broker-list localhost:9092 --topi
 然后在cmd3中可以写消息发送
 
 -- 接受消息
-cmd4: bin/windows/kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test001
+cmd4: bin/windows/kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic topic_flink_sensor
 cmd4中就会接受到cmd3中发送的消息
 
 -- 关闭的时候 windows任务管理器 详细信息里面java开头的都kill掉

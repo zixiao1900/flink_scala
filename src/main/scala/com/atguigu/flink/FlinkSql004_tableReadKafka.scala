@@ -5,12 +5,13 @@ import org.apache.flink.table.api.DataTypes
 import org.apache.flink.table.api.scala._
 import org.apache.flink.table.descriptors.{Csv, FileSystem, Kafka, Schema}
 
-object FlinkSql004_tableConnectKafka {
+object FlinkSql004_tableReadKafka {
   def main(args: Array[String]): Unit = {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     env.setParallelism(1)
 
-    // todo 从文件读取成sql table 一次性读取文件 类似批操作
+    // 输入表
+    // todo 从kafka读取成sql table
     val tableEnv: StreamTableEnvironment = StreamTableEnvironment.create(env)
     tableEnv.connect(new Kafka()
       .version("0.11")
@@ -26,7 +27,7 @@ object FlinkSql004_tableConnectKafka {
       .createTemporaryTable("kafkaInputTable")
 
 
-    // todo sql 做过滤
+    // todo sql 每一条都做个过滤
     val sqlText =
       s"""
          |select * from kafkaInputTable where id = 'sensor_1'
