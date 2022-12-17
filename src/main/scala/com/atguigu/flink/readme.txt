@@ -1,4 +1,20 @@
 flink
+001-002 从文件读取有界流无界流
+003-004 从内存 文件 kafka中读取流式数据
+005     从文件中生产流式数据到kafka生产者   后面很多都用到这个
+006     从文件中生产流式数据直接到内存中
+007     基本的keyBy + 聚合方法
+008     keyBy + 自定义聚合方法
+009     流式数据分流split
+010     流式数据合流connect + coMap
+011     filter
+012     map
+013-017 流式数据写入File, Kafka, Redis, ES, MySql
+018-020 waterMark window EventTime
+021-022 KeyState, RichFunction
+023-024 ProcessFunction
+
+
 
 
 netcat工具像端口不断发送数据 模拟数据流

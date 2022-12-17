@@ -4,6 +4,7 @@ import org.apache.flink.streaming.api.scala._
 import org.apache.flink.table.api.{DataTypes, Table}
 import org.apache.flink.table.api.scala._
 import org.apache.flink.table.descriptors.{Csv, FileSystem, Schema}
+import org.apache.flink.types.Row
 
 object FlinkSql006_tableSimpleOutputFile {
   def main(args: Array[String]): Unit = {
@@ -35,7 +36,9 @@ object FlinkSql006_tableSimpleOutputFile {
     val aggTable: Table = sensorTable
       .groupBy('id) // 基于id 分组
       .select('id, 'id.count as 'count)
-    aggTable.toRetractStream[(String, Long)].print()
+//    aggTable.toRetractStream[(String, Long)].print()
+    val aggDataStream: DataStream[(Boolean, Row)] = aggTable.toRetractStream[Row]
+    aggDataStream.print()
     /*  todo false代表作废
     (true,(sensor_1,1))
     (true,(sensor_2,1))
@@ -95,7 +98,7 @@ object FlinkSql006_tableSimpleOutputFile {
       )
       .createTemporaryTable("outputTable_simple")
     // 追加 不能有聚合的操作
-    simpleTable.insertInto("outputTable_simple")
+//    simpleTable.insertInto("outputTable_simple")
 
 
     env.execute()

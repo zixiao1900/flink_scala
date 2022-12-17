@@ -51,7 +51,8 @@ object FlinkSql004_tableReadKafka {
 
     // todo table API 做过滤
     val resultTable = tableEnv.from("kafkaInputTable").select("*").filter('id === "sensor_1")
-    resultTable.toAppendStream[(String, Long, Double)].print("table")
+    val resultDataStream: DataStream[(String, Long, Double)] = resultTable.toAppendStream[(String, Long, Double)]
+    resultDataStream.print()
     /*
     (sensor_1,1547718199,35.8)
     (sensor_1,1547718206,34.8)

@@ -97,9 +97,11 @@ object FlinkSql001_example {
          |from ${tableName}
          |where id = 'sensor_1'
          |""".stripMargin
-    val resultSqlTable1 = tableEnv.sqlQuery(sqlText1)
-      resultSqlTable1.toAppendStream[(String, Double)].print("resultSql1")
-    /*
+    val resultSqlTable1: Table = tableEnv.sqlQuery(sqlText1)
+    // todo Table -> DataStream
+    val resultDataStream: DataStream[(String, Double)] = resultSqlTable1.toAppendStream[(String, Double)]
+    resultDataStream.print()
+  /*
     resultSql1> (sensor_1,35.8)
     resultSql1> (sensor_1,34.8)
     resultSql1> (sensor_1,31.8)

@@ -84,7 +84,7 @@ object Flink016_sink_ES {
 //health status index  uuid                   pri rep docs.count docs.deleted store.size pri.store.size
 //yellow open   sensor CiTJd6UBRtCV9zSp7hd4Eg   5   1         20            0       460b           460b  // 有界流
 
-// 查看具体index中的数据 cmd2: curl "localhost:9200/sensor/_search?pretty"
+// 查看具体index中的数据 cmd2: curl "localhost:9200/sensorstream/_search?pretty"
 /*
 {
   "took" : 1,
